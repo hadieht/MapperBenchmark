@@ -1,89 +1,88 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using MapperBenchmark.DataModel.Dto;
-using MapperBenchmark.DataModel.Entities;
+
 
 namespace MapperBenchmark.Config
 {
     public static class ManualMapper
     {
-        public static List<Person> ToPersonList(this List<PersonDto> personDtos)
+        public static List<DataModel.Dto.PersonDto> ToPersonDtoList(this List<DataModel.Entities.Person> persons)
         {
-            return personDtos.Select(a => a.ToPerson()).ToList();
+            return persons.Select(a => a.ToPersonDto()).ToList();
         }
 
-        public static List<Address> ToAddressList(this List<AddressDto> addressDto)
+        public static List<DataModel.Dto.AddressDto> ToAddressDtoList(this List<DataModel.Entities.Address> addresses)
         {
-            return addressDto.Select(a => a.ToAddress()).ToList();
+            return addresses.Select(a => a.ToAddressDto()).ToList();
         }
 
-        public static List<Education> ToEducationList(this List<EducationDto> educationDto)
+        public static List<DataModel.Dto.EducationDto> ToEducationDtoList(this List<DataModel.Entities.Education> educations)
         {
-            return educationDto.Select(a => a.ToEduction()).ToList();
+            return educations.Select(a => a.ToEductionDto()).ToList();
         }
 
-        public static List<Email> ToEmailList(this List<EmailDto> emailDto)
+        public static List<DataModel.Dto.EmailDto> ToEmailDtoList(this List<DataModel.Entities.Email> emails)
         {
-            return emailDto.Select(a => a.ToEmail()).ToList();
+            return emails.Select(a => a.ToEmailDto()).ToList();
         }
 
-        public static Person ToPerson(this PersonDto personDto)
+        public static DataModel.Dto.PersonDto ToPersonDto(this DataModel.Entities.Person person)
         {
-            return new()
+            return new DataModel.Dto.PersonDto()
             {
-                Addresses = personDto.Addresses.ToAddressList(),
-                Age = personDto.Age,
-                BirthDate = personDto.BirthDate,
-                Description = personDto.Description,
-                EductionHistory = personDto.EductionHistory.ToEducationList(),
-                Emails = personDto.Emails.ToEmailList(),
-                Id = personDto.Id,
-                IdCard = personDto.IdCard,
-                IsMarrid = personDto.IsMarrid,
-                LastName = personDto.LastName,
-                MarrigeDate = personDto.MarrigeDate,
-                Name = personDto.Name,
-                PhoneNumbers = personDto.PhoneNumbers,
-                Photo = personDto.Photo,
-                Salary = personDto.Salary
+                Addresses = person.Addresses.ToAddressDtoList(),
+                Age = person.Age,
+                BirthDate = person.BirthDate,
+                Description = person.Description,
+                EductionHistory = person.EductionHistory.ToEducationDtoList(),
+                Emails = person.Emails.ToEmailDtoList(),
+                Id = person.Id,
+                IdCard = person.IdCard,
+                IsMarrid = person.IsMarrid,
+                LastName = person.LastName,
+                MarrigeDate = person.MarrigeDate,
+                Name = person.Name,
+                PhoneNumbers = person.PhoneNumbers,
+                Photo = person.Photo,
+                Salary = person.Salary
             };
         }
 
-        public static Address ToAddress(this AddressDto addressDto)
+        public static DataModel.Dto.AddressDto ToAddressDto(this DataModel.Entities.Address address)
         {
-            return new()
+            return new DataModel.Dto.AddressDto()
             {
-                Id = addressDto.Id,
-                AddressLine1 = addressDto.AddressLine1,
-                AddressLine2 = addressDto.AddressLine2,
-                City = addressDto.City,
-                Country = addressDto.Country,
-                Picture = addressDto.Picture,
-                PostalCode = addressDto.PostalCode,
-                Region = addressDto.Region
+                Id = address.Id,
+                AddressLine1 = address.AddressLine1,
+                AddressLine2 = address.AddressLine2,
+                City = address.City,
+                Country = address.Country,
+                Picture = address.Picture,
+                PostalCode = address.PostalCode,
+                Region = address.Region
             };
         }
 
-        public static Education ToEduction(this EducationDto educationDto)
+        public static DataModel.Dto.EducationDto ToEductionDto(this DataModel.Entities.Education education)
         {
-            return new()
+            return new DataModel.Dto.EducationDto()
             {
-                Id = educationDto.Id,
-                Courses = educationDto.Courses,
-                Degree = educationDto.Degree,
-                EndDate = educationDto.EndDate,
-                FieldOfStudy = educationDto.FieldOfStudy,
-                SchoolName = educationDto.SchoolName,
-                StartDate = educationDto.StartDate
+                Id = education.Id,
+                Courses = education.Courses,
+                Degree = education.Degree,
+                EndDate = education.EndDate,
+                FieldOfStudy = education.FieldOfStudy,
+                SchoolName = education.SchoolName,
+                StartDate = education.StartDate
             };
         }
 
-        public static Email ToEmail(this EmailDto emailDto)
+        public static DataModel.Dto.EmailDto ToEmailDto(this DataModel.Entities.Email email)
         {
-            return new()
+            return new DataModel.Dto.EmailDto()
             {
-                Id = emailDto.Id,
-                EmailAdresses = emailDto.EmailAdresses
+                Id = email.Id,
+                EmailAdresses = email.EmailAdresses
             };
         }
     }

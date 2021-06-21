@@ -12,10 +12,10 @@ namespace MapperBenchmark.Config
         {
             AutoMapper = new MapperConfiguration(config =>
             {
-                config.CreateMap<AddressDto, Address>();
-                config.CreateMap<EducationDto, Education>();
-                config.CreateMap<EmailDto, Email>();
-                config.CreateMap<PersonDto, Person>();
+                config.CreateMap<Address, AddressDto>();
+                config.CreateMap<Education, EducationDto>();
+                config.CreateMap<Email, EmailDto>();
+                config.CreateMap<Person, PersonDto>();
             }).CreateMapper();
         }
     }

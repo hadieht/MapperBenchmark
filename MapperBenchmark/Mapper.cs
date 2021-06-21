@@ -3,8 +3,6 @@ using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Order;
 using MapperBenchmark.Config;
 using MapperBenchmark.DataGenrate;
-using MapperBenchmark.DataModel.Dto;
-using MapperBenchmark.DataModel.Entities;
 using Mapster;
 
 namespace MapperBenchmark
@@ -16,11 +14,10 @@ namespace MapperBenchmark
     [HtmlExporter, CsvExporter, PlainExporter, JsonExporter]
     public class Mapper
     {
-
-        [Params(1, 10, 100, 1000, 10000, 100000, 1000000)]
+        [Params(1, 10, 100, 1000, 10000, 100000)]
         public int PersonCount;
 
-        private List<PersonDto> _personDtos;
+        private List<DataModel.Entities.Person> _personEntities;
 
         public Mapper()
         {
@@ -30,25 +27,39 @@ namespace MapperBenchmark
         [GlobalSetup]
         public void Setup()
         {
-            _personDtos = Genrator.GetPersonGenratedData(PersonCount);
+            _personEntities = Genrator.GetPersonGenratedData(PersonCount);
         }
 
         [Benchmark(Baseline = true)]
-        public List<Person> ManualMapping()
+        public List<DataModel.Dto.PersonDto> ManualMapping()
         {
-            return _personDtos.ToPersonList();
+            return _personEntities.ToPersonDtoList();
         }
 
         [Benchmark]
-        public List<Person> Mapster()
+        public List<DataModel.Dto.PersonDto> AutoMapper()
         {
-            return _personDtos.Adapt<List<Person>>();
+            return AutoMapperConfig.AutoMapper.Map<List<DataModel.Dto.PersonDto>>(_personEntities);
         }
 
         [Benchmark]
-        public List<Person> AutoMapper()
+        public List<DataModel.Dto.PersonDto> Mapster()
         {
-            return AutoMapperConfig.AutoMapper.Map<List<Person>>(_personDtos);
+            return _personEntities.Adapt<List<DataModel.Dto.PersonDto>>();
         }
+
+        //[Benchmark]
+        //public List<DataModel.Dto.PersonDto> MapsterWithConfig()
+        //{
+        //    var config = MapsterConfig.GetTypeAdapterConfig();
+        //    return _personEntities.Adapt<List<DataModel.Dto.PersonDto>>(config);
+        //}
+
+        //[Benchmark]
+        //public List<DataModel.Dto.PersonDto> MapsterWithAdaptToType()
+        //{
+        //    var mapper = new MapsterMapper.Mapper();
+        //    return mapper.From(_personEntities).AdaptToType<List<DataModel.Dto.PersonDto>>();
+        //}
     }
 }
